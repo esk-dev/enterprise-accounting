@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { login } from '../../store/actions/auth.action';
 import { User } from 'src/app/models/user';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private router: Router
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -32,11 +29,6 @@ export class LoginComponent implements OnInit {
 
   public login() {
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((userData: User) => {
-      console.log(userData); // dispatch to user store
-      this.authService.authState.next(true);
-      // this.userService.initUserData(userData);
-      this.router.navigateByUrl('/view');
-    });
+    this.store.dispatch(login({ email, password }));
   }
 }

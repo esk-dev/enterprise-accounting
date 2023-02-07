@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
+import { RoleGuard } from './role.guard';
 const routes: Routes = [
   {
     path: 'login',
@@ -12,7 +13,10 @@ const routes: Routes = [
     path: 'view',
     title: 'view',
     loadChildren: () => import('./view/view.module').then((m) => m.ViewModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: {
+      role: 'ROLE_ADMIN',
+    },
   },
   {
     path: '',
@@ -22,6 +26,10 @@ const routes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: {
+      role: 'ROLE_ADMIN',
+    },
   },
 ];
 

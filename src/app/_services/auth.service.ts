@@ -5,7 +5,7 @@ const Users: User[] = [
   {
     email: 'q@gmail.com',
     password: '12345678',
-    role: 'worker',
+    role: 'ROLE_ADMIN',
   },
 ];
 @Injectable({
@@ -13,12 +13,6 @@ const Users: User[] = [
 })
 export class AuthService {
   private UserDB: Observable<User[]> = of(Users);
-
-  public authState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
-  public isAuthenticated: Observable<boolean> = this.authState;
 
   public login(email: string, password: string): Observable<User> {
     return this.findUser(email).pipe(
@@ -32,9 +26,9 @@ export class AuthService {
     );
   }
 
-  public logout(): void {
-    this.authState.next(false);
-  }
+  // public logout(): void {
+
+  // }
 
   private findUser(email: string): Observable<User> {
     return this.UserDB.pipe(

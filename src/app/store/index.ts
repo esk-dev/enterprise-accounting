@@ -1,14 +1,21 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer,
-} from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { MainEnterprise } from './../models/main-enterprise';
+import { SubEnterprise } from './../models/sub-enterprise';
+import { User } from './../models/user';
 
-export interface State {}
+export interface UserState {
+  isAuth: boolean;
+  user: User;
+}
 
-export const reducers: ActionReducerMap<State> = {};
+export interface MainEnterpriseState {
+  MainEnterprises: MainEnterprise[];
+}
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export interface SubEnterpriseState {
+  SubEnterprises: SubEnterprise[];
+}
+
+export const initalUserState: UserState = {
+  isAuth: false,
+  user: {} as User,
+};
