@@ -18,10 +18,10 @@ export class AuthEffects {
       ofType(login),
       mergeMap(({ email, password }) => {
         return this.authService.login(email, password).pipe(
-          map((user) => setUser({ user }), setAuth({ isAuth: true })),
+          map((user) => setUser({ user, isAuth: true })),
           tap((user) => {
             console.log(user);
-            this.router.navigateByUrl('./view');
+            this.router.navigateByUrl('/view');
           })
         );
       })

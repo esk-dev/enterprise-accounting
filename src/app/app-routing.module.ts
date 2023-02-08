@@ -26,10 +26,6 @@ const routes: Routes = [
   {
     path: '**',
     component: PageNotFoundComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: {
-      role: 'ROLE_ADMIN',
-    },
   },
 ];
 
