@@ -1,17 +1,42 @@
-import { MainEnterprise } from './../models/main-enterprise';
-import { SubEnterprise } from './../models/sub-enterprise';
 import { createReducer, on } from '@ngrx/store';
+import { SubEnterprise } from 'src/app/models/sub-enterprise';
 import {
-  GetMainEnterpisesAction,
-  CreateMainEnterpisesAction,
-  UpdateMainEnterpisesAction,
-  GetSubEnterpisesAction,
-  CreateSubEnterpisesAction,
-  UpdateSubEnterpisesAction,
+  LoadEnterpisesAction,
+  CreateMainEnterpiseAction,
+  UpdateMainEnterpiseAction,
+  CreateSubEnterpiseAction,
+  UpdateSubEnterpiseAction,
 } from '../actions/enterprise.action';
-import { EnterprisesState, initalEnterprisesState } from './../index';
+import { EnterprisesState, initalEnterprisesState } from './../state/app.state';
 
-export const mainEnterprisesReducer = createReducer(
+export const enterpriseReducer = createReducer(
   initalEnterprisesState,
-  on(GetMainEnterpisesAction, (state): MainEnterprise => ({ ...state }))
+  on(
+    LoadEnterpisesAction,
+    (state, { payload }): EnterprisesState => ({
+      ...payload,
+    }),
+  ),
+  on(CreateMainEnterpiseAction, (state, { newMainEnterprise }): EnterprisesState => {
+    const newState = { ...state };
+    newState.mainEnterprises.unshift(newMainEnterprise);
+    return newState;
+  }),
+  on(UpdateMainEnterpiseAction, (state, { updatedMainEnterprise }): EnterprisesState => {
+    const newState = { ...state };
+    newState.mainEnterprises.filter((el) => el.INN !== updatedMainEnterprise.INN);
+    newState.mainEnterprises.unshift(updatedMainEnterprise);
+    return newState;
+  }),
+  on(CreateSubEnterpiseAction, (state, { newSubEnterprise }): EnterprisesState => {
+    const newState = { ...state };
+    newState.subEnterprises.unshift(newSubEnterprise);
+    return newState;
+  }),
+  on(UpdateSubEnterpiseAction, (state, { updatedSubEnterprise }): EnterprisesState => {
+    const newState = { ...state };
+    newState.subEnterprises.filter((el: SubEnterprise) => el.phone !== updatedSubEnterprise.phone);
+    newState.subEnterprises.unshift(updatedSubEnterprise);
+    return newState;
+  }),
 );

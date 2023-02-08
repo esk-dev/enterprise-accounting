@@ -8,8 +8,13 @@ export interface UserState {
 }
 
 export interface EnterprisesState {
-  mainEnterprises: MainEnterprise[];
-  subEnterprises: SubEnterprise[];
+  mainEnterprises: Array<MainEnterprise>;
+  subEnterprises: Array<SubEnterprise>;
+}
+
+export interface AppState {
+  enterprises: EnterprisesState;
+  user: UserState;
 }
 
 export const initalUserState: UserState = {
@@ -18,6 +23,22 @@ export const initalUserState: UserState = {
 };
 
 export const initalEnterprisesState: EnterprisesState = {
-  mainEnterprises: [],
-  subEnterprises: [],
+  mainEnterprises: [
+    {
+      fullName: 'test name',
+      shortName: 'short name',
+      INN: 12345678,
+      KPP: 12345678,
+      founder: 'Name founder',
+      addres: 'Some city',
+      phone: 123456678,
+    },
+  ],
+  subEnterprises: [
+    {
+      officeAdress: 'some adress',
+      phone: 12345678,
+      official: 'name',
+    },
+  ],
 };

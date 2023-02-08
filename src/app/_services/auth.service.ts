@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, of, map } from 'rxjs';
+import { Observable, of, map } from 'rxjs';
 import { User } from './../models/user';
 const Users: User[] = [
   {
@@ -22,7 +22,7 @@ export class AuthService {
         } else {
           throw new Error(`Incorrect pass`);
         }
-      })
+      }),
     );
   }
 
@@ -40,14 +40,11 @@ export class AuthService {
         } else {
           throw new Error(`User dosen't exist`);
         }
-      })
+      }),
     );
   }
 
-  private validatePassword(
-    passwordInDb: string,
-    inputPassword: string
-  ): boolean {
+  private validatePassword(passwordInDb: string, inputPassword: string): boolean {
     console.log(passwordInDb, inputPassword);
     const isValid: boolean = passwordInDb == inputPassword ? true : false;
     return isValid;

@@ -1,32 +1,31 @@
 import { createAction, props } from '@ngrx/store';
+import { EnterprisesState } from '../state/app.state';
 import { MainEnterprise } from './../../models/main-enterprise';
 import { SubEnterprise } from './../../models/sub-enterprise';
 
-export const GetMainEnterpisesAction = createAction(
-  '[ MainEnterprise ] Get MainEnterpise'
+export const GetEnterpisesAction = createAction('[ Enterprises ] Get Enterpises');
+
+export const LoadEnterpisesAction = createAction(
+  '[ Enterprises ] Load Enterpise',
+  props<{ payload: EnterprisesState }>(),
 );
 
-export const CreateMainEnterpisesAction = createAction(
+export const CreateMainEnterpiseAction = createAction(
   '[ MainEnterprise ] Create MainEnterpise',
-  props<{ payload: MainEnterprise }>()
+  props<{ newMainEnterprise: MainEnterprise }>(),
 );
 
-export const UpdateMainEnterpisesAction = createAction(
+export const UpdateMainEnterpiseAction = createAction(
   '[ MainEnterprise ] Update MainEnterpise',
-  props<{ payload: MainEnterprise}>()
+  props<{ updatedMainEnterprise: MainEnterprise }>(),
 );
 
-// sub enterprises
-export const GetSubEnterpisesAction = createAction(
-  '[ SubEnterprise ] Get SubEnterpise'
-);
-
-export const CreateSubEnterpisesAction = createAction(
+export const CreateSubEnterpiseAction = createAction(
   '[ SubEnterprise ] Create SubEnterpise',
-  props<{ payload: SubEnterprise }>()
+  props<{ newSubEnterprise: SubEnterprise }>(),
 );
 
-export const UpdateSubEnterpisesAction = createAction(
+export const UpdateSubEnterpiseAction = createAction(
   '[ SubEnterprise ] Update SubEnterpise',
-  props<{ payload: SubEnterprise}>()
+  props<{ updatedSubEnterprise: SubEnterprise }>(),
 );

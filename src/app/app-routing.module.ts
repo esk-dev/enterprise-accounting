@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './helpers/auth.guard';
+import { RoleGuard } from './helpers/role.guard';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
-import { RoleGuard } from './role.guard';
 const routes: Routes = [
   {
     path: 'login',
