@@ -8,7 +8,7 @@ import {
   UpdateSubEnterpiseAction,
 } from '../actions/enterprise.action';
 import { EnterprisesState, initalEnterprisesState } from './../state/app.state';
-
+// TODO Логика проверки сущностей - добавить id для проверки в сущность
 export const enterpriseReducer = createReducer(
   initalEnterprisesState,
   on(
@@ -24,7 +24,7 @@ export const enterpriseReducer = createReducer(
   }),
   on(UpdateMainEnterpiseAction, (state, { updatedMainEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.mainEnterprises.filter((el) => el.INN !== updatedMainEnterprise.INN);
+    newState.mainEnterprises.filter((el) => el._id !== updatedMainEnterprise._id);
     newState.mainEnterprises.unshift(updatedMainEnterprise);
     return newState;
   }),
@@ -35,7 +35,7 @@ export const enterpriseReducer = createReducer(
   }),
   on(UpdateSubEnterpiseAction, (state, { updatedSubEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.subEnterprises.filter((el: SubEnterprise) => el.phone !== updatedSubEnterprise.phone);
+    newState.subEnterprises.filter((el: SubEnterprise) => el._id !== updatedSubEnterprise._id);
     newState.subEnterprises.unshift(updatedSubEnterprise);
     return newState;
   }),
