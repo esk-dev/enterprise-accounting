@@ -13,10 +13,10 @@ const routes: Routes = [
     path: 'view',
     title: 'view',
     loadChildren: () => import('./view/view.module').then((m) => m.ViewModule),
-    canActivate: [AuthGuard, RoleGuard],
-    data: {
-      role: 'ROLE_ADMIN',
-    },
+    // canActivate: [AuthGuard, RoleGuard],
+    // data: {
+    //   role: 'ROLE_ADMIN',
+    // },
   },
   {
     path: '',

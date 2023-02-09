@@ -22,7 +22,7 @@ export const selectSubEnterprises = createSelector(
   (state: EnterprisesState) => state.subEnterprises
 );
 
-export const selectMainEnterprisesById = (mainEnterpriseId: number) =>
+export const selectMainEnterprisesById = (mainEnterpriseId: string) =>
   createSelector(selectMainEnterprises, (mainEnterprises: MainEnterprise[]) => {
     const mainEnterpriseById = mainEnterprises.filter(
       (el) => el._id === mainEnterpriseId

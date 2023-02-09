@@ -1,6 +1,6 @@
 export interface SubEnterprise {
-  readonly _id: number;
+  readonly _id: string;
   officeAdress: string;
-  phone: number;
+  phone: string;
   official: string;
 }

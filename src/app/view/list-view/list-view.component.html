@@ -1,13 +1,47 @@
-<p>list-view works!</p>
-<ng-container *ngFor="let item of (enterprises$ | async)?.mainEnterprises">
-  content
-
-  <div>Some shit happen</div>
-  <div>and this is {{ item | json }}</div>
-</ng-container>
-<ng-container *ngFor="let item of (enterprises$ | async)?.subEnterprises">
-  content
-
-  <div>Some shit happen</div>
-  <div>and this another {{ item | json }}</div>
-</ng-container>
+<section class="list">
+  <h1>Главные организации</h1>
+  <ng-container *ngIf="(enterprises$ | async) as data">
+        <div class="list-header">
+          <span class="column">Полное наименование организации</span>
+          <span class="column">Краткое наименование организации</span>
+          <span class="column">ИНН</span>
+          <span class="column">КПП</span>
+          <span class="column">Учредитель</span>
+          <span class="column">Адрес</span>
+          <span class="column">Номер телефона</span>
+        </div>
+    
+    <ng-container *ngFor="let item of data.mainEnterprises; trackBy: trackById ">
+      <div class="list-item-row">
+          <span class="column">{{item.fullName}}</span>
+          <span class="column">{{item.shortName}}</span>
+          <span class="column">{{item.INN}}</span>
+          <span class="column">{{item.KPP}}</span>
+          <span class="column">{{item.founder}}</span>
+          <span class="column">{{item.addres}}</span>
+          <span class="column">{{item.phone}}</span>
+          <!-- <a mat-icon-button class="row-action" color="accent" ><mat-icon mat-list-icon>mode_edit</mat-icon></a> -->
+      </div> 
+    </ng-container>
+  
+  <mat-divider></mat-divider>
+  <h1>Филиалы</h1>
+  
+    <div class="list-header">
+          <span class="column">Адрес офиса</span>
+          <span class="column">Номер телефона</span>
+          <span class="column">Представитель</span>
+    </div>
+    
+    <ng-container *ngFor="let item of data.subEnterprises; trackBy: trackById ">
+      <div class="list-item-row">
+          <span class="column">{{item.officeAdress}}</span>
+          <span class="column">{{item.phone}}</span>
+          <span class="column">{{item.official}}</span>
+          <!-- <a mat-icon-button class="row-action" color="accent"><mat-icon mat-list-icon>mode_edit</mat-icon></a> -->
+      </div>
+    </ng-container>
+    
+  </ng-container>
+  
+</section>

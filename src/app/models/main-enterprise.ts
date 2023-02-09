@@ -1,10 +1,10 @@
 export interface MainEnterprise {
-  readonly _id: number;
+  readonly _id: string;
   fullName: string;
   shortName: string;
   INN: number;
   KPP: number;
   founder: string;
   addres: string;
-  phone: number;
+  phone: string;
 }

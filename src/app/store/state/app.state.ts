@@ -23,24 +23,6 @@ export const initalUserState: UserState = {
 };
 
 export const initalEnterprisesState: EnterprisesState = {
-  mainEnterprises: [
-    {
-      _id: 23,
-      fullName: 'test name',
-      shortName: 'short name',
-      INN: 12345678,
-      KPP: 12345678,
-      founder: 'Name founder',
-      addres: 'Some city',
-      phone: 123456678,
-    },
-  ],
-  subEnterprises: [
-    {
-      _id: 14,
-      officeAdress: 'some adress',
-      phone: 12345678,
-      official: 'name',
-    },
-  ],
+  mainEnterprises: [],
+  subEnterprises: [],
 };

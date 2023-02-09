@@ -1,0 +1,32 @@
+.list {
+  .list-header {
+    display: flex;
+    flex-flow: nowrap row;
+    padding: 10px 15px;
+    margin: 20px 0;
+  }
+  .list-item-row {
+    display: flex;
+    flex-flow: nowrap row;
+    position: relative;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  }
+  .column {
+    margin-right: 5px;
+    flex: 1 0 13%;
+    display: inline-flex;
+    min-width: 50px;
+    max-width: 350px;
+    text-align: left;
+    word-break: break-word;
+  }
+}
+.row-action {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+}
