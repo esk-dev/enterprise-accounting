@@ -1,1 +1,13 @@
 <p>list-view works!</p>
+<ng-container *ngFor="let item of (enterprises$ | async)?.mainEnterprises">
+  content
+
+  <div>Some shit happen</div>
+  <div>and this is {{ item | json }}</div>
+</ng-container>
+<ng-container *ngFor="let item of (enterprises$ | async)?.subEnterprises">
+  content
+
+  <div>Some shit happen</div>
+  <div>and this another {{ item | json }}</div>
+</ng-container>

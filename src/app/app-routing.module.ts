@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './helpers/auth.guard';
+import { RoleGuard } from './helpers/role.guard';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 const routes: Routes = [
   {
@@ -12,9 +13,13 @@ const routes: Routes = [
     path: 'view',
     title: 'view',
     loadChildren: () => import('./view/view.module').then((m) => m.ViewModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: {
+      role: 'ROLE_ADMIN',
+    },
   },
   {
+    path: '',
     redirectTo: '/login',
     pathMatch: 'full',
   },

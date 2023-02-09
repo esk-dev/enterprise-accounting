@@ -1,4 +1,5 @@
 export interface MainEnterprise {
+  readonly _id: number;
   fullName: string;
   shortName: string;
   INN: number;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user';
-import { AuthService } from '../auth.service';
+import { Store } from '@ngrx/store';
+import { login } from '../../store/actions/auth.action';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  constructor(private authService: AuthService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -22,9 +22,6 @@ export class LoginComponent implements OnInit {
 
   public login() {
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((userData: User) => {
-      this.authService.authState.next(true);
-      console.log(userData); // dispatch to user store
-    });
+    this.store.dispatch(login({ email, password }));
   }
 }
