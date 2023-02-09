@@ -25,6 +25,7 @@ export const initalUserState: UserState = {
 export const initalEnterprisesState: EnterprisesState = {
   mainEnterprises: [
     {
+      _id: 23,
       fullName: 'test name',
       shortName: 'short name',
       INN: 12345678,
@@ -36,6 +37,7 @@ export const initalEnterprisesState: EnterprisesState = {
   ],
   subEnterprises: [
     {
+      _id: 14,
       officeAdress: 'some adress',
       phone: 12345678,
       official: 'name',
