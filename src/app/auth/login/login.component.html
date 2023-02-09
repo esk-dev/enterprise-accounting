@@ -1,42 +1,48 @@
 <section>
   <form [formGroup]="loginForm" class="login-form">
-    <!-- <h1>Login</h1> -->
-    <div class="form-input">
+    <h1>Login</h1>
+    <div>
+      <mat-form-field appearance="outline">
+      <mat-label for="email">
+        Email
+      </mat-label>
       <input
+        matInput
         formControlName="email"
         type="text"
         name="email"
         id="email"
         autocomplete="off"
-        class="form-control"
         required
-      />
-      <label class="placeholder-text" for="email">
-        <div class="text">Login</div>
-      </label>
+      >
+      <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+        Неправильный Email
+      </mat-error>
+    </mat-form-field>
     </div>
-    <div class="form-input">
+    <mat-form-field appearance="outline">
+      <mat-label for="password">
+        Password
+      </mat-label>
       <input
+        matInput
         formControlName="password"
         type="password"
         name="password"
         id="password"
         autocomplete="off"
-        class="form-control"
         required
       />
-      <label class="placeholder-text" for="password">
-        <div class="text">Password</div>
-      </label>
-    </div>
-    <button class="btn" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+       Пароль должен быть не менее 8 символов
+      </mat-error>
+    </mat-form-field>
+    <button mat-button color="accent" [disabled]="loginForm.invalid" (click)="login()">Login</button>
   </form>
 </section>
-<!-- 
-    <div class="input-contain">
-        <input type="text" id="fname" name="fname" autocomplete="off" value="" aria-labelledby="placeholder-fname">
-        <label class="placeholder-text" for="fname" id="placeholder-fname">
-            <div class="text">First Name</div>
-        </label>
-    </div>
- -->

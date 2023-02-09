@@ -5,9 +5,9 @@ $dark-primary: mat.define-palette(mat.$gray-palette, 400, 200, 600);
 $dark-accent: mat.define-palette(mat.$red-palette, A700, A400, A200);
 $dark-warn: mat.define-palette(mat.$blue-palette, 900);
 
-$light-primary: mat.define-palette(mat.$blue-grey-palette, 800, 600, 900 );
-$light-accent: mat.define-palette(mat.$red-palette, A200, A100, A400);
-$light-warn: mat.define-palette(mat.$blue-palette, 200, 100, 300);
+$light-primary: mat.define-palette(mat.$blue-grey-palette, 800, 600, 900);
+$light-accent: mat.define-palette(mat.$blue-palette, 200, 100, 300);
+$light-warn: mat.define-palette(mat.$red-palette, A200, A100, A400);
 
 $palette: (
   $dark-primary,
@@ -15,7 +15,7 @@ $palette: (
   $dark-warn,
   $light-primary,
   $light-accent,
-  $light-warn,
+  $light-warn
 );
 
 @function get-color($keys...) {

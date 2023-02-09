@@ -1,8 +1,19 @@
+@use "../styles/colors/variables" as colors;
+@use "sass:map";
+
 .container {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  min-height: calc(100vh - 16vh);
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+header,
+footer {
+  height: 8vh;
+  display: flex;
+  flex-flow: nowrap row;
+  background-color: map-get(colors.$light-primary, default);
 }
