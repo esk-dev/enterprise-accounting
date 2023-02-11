@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, throwError } from 'rxjs';
-import { MainEnterprise } from '../models/main-enterprise';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IMainEnterprise } from '../models/main-enterprise';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { SubEnterprise } from '../models/sub-enterprise';
+import { ISubEnterprise } from '../models/sub-enterprise';
 import { EnterprisesState } from '../store/state/app.state';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -64,37 +64,37 @@ const DB: EnterprisesState = {
       officeAdress: '39114 Javier Shoal',
       phone: '627-234-0750',
       official: 'Caroline Conn',
-      _id: '1',
+      _id: '123',
     },
     {
       officeAdress: '17126 Dietrich Fort',
       phone: '492-464-9637',
       official: 'Minnie Ritchie',
-      _id: '2',
+      _id: '32',
     },
     {
       officeAdress: '4308 Genesis Islands',
       phone: '491-477-0098',
       official: 'Stuart Rutherford',
-      _id: '3',
+      _id: '14',
     },
     {
       officeAdress: '78331 Ebert Wells',
       phone: '843-491-4164',
       official: "Bennie D'Amore V",
-      _id: '4',
+      _id: '123',
     },
     {
       officeAdress: '505 Shanahan Lane',
       phone: '620-463-3666',
       official: 'Nichole Brakus',
-      _id: '5',
+      _id: '123',
     },
     {
       officeAdress: '7652 Thiel Brook',
       phone: '814-350-4050',
       official: 'Mr. Deanna Mayer',
-      _id: '6',
+      _id: '123',
     },
   ],
 };
@@ -102,35 +102,54 @@ const DB: EnterprisesState = {
   providedIn: 'root',
 })
 export class EnterpriseService {
-  private db: Observable<EnterprisesState> = of(DB);
+  private db: BehaviorSubject<EnterprisesState> = new BehaviorSubject<EnterprisesState>(DB);
 
   public loadEnterprises(): Observable<EnterprisesState> {
-    return this.db.pipe();
+    return this.db.asObservable();
   }
 
-  public createMainEnterprise(
-    newMainEnterprise: MainEnterprise
-  ): Observable<EnterprisesState> {
-    return this.db.pipe(
-      map((data) => {
-        data.mainEnterprises.push(newMainEnterprise);
-        return data;
-      })
-    );
+  public createMainEnterprise(newMainEnterprise: IMainEnterprise): Observable<EnterprisesState> {
+    const newState = { ...this.db.getValue() };
+    const enterprise = { ...newMainEnterprise };
+    enterprise._id = Math.floor(Math.random() * 3020).toString();
+    const updatedMainEnterprises = [...newState.mainEnterprises, { ...enterprise }];
+    console.log(updatedMainEnterprises);
+    newState.mainEnterprises = [...updatedMainEnterprises];
+    this.db.next(newState);
+    return this.db.asObservable();
   }
 
   public updateMainEnterprise(
-    updatedMainEnterprise: MainEnterprise
+    updatedMainEnterprise: IMainEnterprise,
   ): Observable<EnterprisesState> {
-    return this.db.pipe(
-      map((data) => {
-        data.mainEnterprises.forEach((el) =>
-          el._id === updatedMainEnterprise._id
-            ? (el = updatedMainEnterprise)
-            : throwError(() => 'Главная организация не обновлена')
-        );
-        return data;
-      })
+    const newState = { ...this.db.getValue() };
+    const newMainenterprise = newState.mainEnterprises.filter(
+      (el: IMainEnterprise) => el._id !== updatedMainEnterprise._id,
     );
+    newMainenterprise.push(updatedMainEnterprise);
+    newState.mainEnterprises = [...newMainenterprise];
+    this.db.next(newState);
+    return this.db.asObservable();
+  }
+
+  public createSubEnterprise(newSubEnterprise: ISubEnterprise): Observable<EnterprisesState> {
+    const newState = { ...this.db.getValue() };
+    const enterprise = { ...newSubEnterprise };
+    enterprise._id = Math.floor(Math.random() * 3020).toString();
+    const updatedSubEnterprises = [...newState.subEnterprises, { ...enterprise }];
+    newState.subEnterprises = [...updatedSubEnterprises];
+    this.db.next(newState);
+    return this.db.asObservable();
+  }
+
+  public updateSubEnterprise(updatedSubEnterprise: ISubEnterprise): Observable<EnterprisesState> {
+    const newState = { ...this.db.getValue() };
+    const newSubEnterprise = newState.subEnterprises.filter(
+      (el: ISubEnterprise) => el._id !== updatedSubEnterprise._id,
+    );
+    newSubEnterprise.push(updatedSubEnterprise);
+    newState.subEnterprises = [...newSubEnterprise];
+    this.db.next(newState);
+    return this.db.asObservable();
   }
 }

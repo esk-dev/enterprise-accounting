@@ -1,4 +1,8 @@
+@use '../../../styles/mixins/media-query' as mq;
 .list {
+  h1 {
+    margin-top: 15px;
+  }
   .list-header {
     display: flex;
     flex-flow: nowrap row;
@@ -8,7 +12,6 @@
   .list-item-row {
     display: flex;
     flex-flow: nowrap row;
-    position: relative;
     padding: 10px 15px;
     margin: 20px 0;
     border-radius: 5px;
@@ -23,10 +26,27 @@
     text-align: left;
     word-break: break-word;
   }
-}
-.row-action {
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  right: 0;
+
+  .spacer {
+    width: 40px;
+    flex-basis: 0;
+  }
+  .row-action {
+    flex-basis: min-content;
+    justify-content: center;
+  }
+
+  .add-item {
+    margin-bottom: 25px;
+  }
+
+  @include mq.media-tablet() {
+    .list {
+      font-size: 12px;
+
+      .column {
+        flex: 1 1 5%;
+      }
+    }
+  }
 }

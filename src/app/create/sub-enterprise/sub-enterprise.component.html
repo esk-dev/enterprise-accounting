@@ -1,0 +1,47 @@
+<form [formGroup]="formSubEnterprise">
+  <mat-form-field appearance="outline">
+    <mat-label for="officeAdress">Адрес офиса</mat-label>
+    <input
+      matInput
+      formControlName="officeAdress"
+      type="text"
+      name="officeAdress"
+      id="officeAdress"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="phone">Номер телефона</mat-label>
+    <input
+      matInput
+      formControlName="phone"
+      type="text"
+      name="phone"
+      id="phone"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="official">Должностное лицо(ФИО)</mat-label>
+    <input
+      matInput
+      formControlName="official"
+      type="text"
+      name="official"
+      id="official"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+  <button
+    color="primary"
+    mat-flat-button
+    type="button"
+    (click)="create(formSubEnterprise.value)"
+    [disabled]="formSubEnterprise.invalid"
+  >
+    Создать
+  </button>
+</form>

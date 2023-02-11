@@ -1,15 +1,15 @@
-import { MainEnterprise } from './../../models/main-enterprise';
-import { SubEnterprise } from './../../models/sub-enterprise';
-import { User } from './../../models/user';
+import { IMainEnterprise } from './../../models/main-enterprise';
+import { ISubEnterprise } from './../../models/sub-enterprise';
+import { IUser } from './../../models/user';
 
 export interface UserState {
   isAuth: boolean;
-  user: User;
+  user: IUser;
 }
 
 export interface EnterprisesState {
-  mainEnterprises: Array<MainEnterprise>;
-  subEnterprises: Array<SubEnterprise>;
+  mainEnterprises: Array<IMainEnterprise>;
+  subEnterprises: Array<ISubEnterprise>;
 }
 
 export interface AppState {
@@ -19,7 +19,7 @@ export interface AppState {
 
 export const initalUserState: UserState = {
   isAuth: false,
-  user: {} as User,
+  user: {} as IUser,
 };
 
 export const initalEnterprisesState: EnterprisesState = {

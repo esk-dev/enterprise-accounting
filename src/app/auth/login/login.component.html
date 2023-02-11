@@ -1,11 +1,8 @@
 <section>
   <form [formGroup]="loginForm" class="login-form">
     <h1>Login</h1>
-    <div>
-      <mat-form-field appearance="outline">
-      <mat-label for="email">
-        Email
-      </mat-label>
+    <mat-form-field appearance="outline">
+      <mat-label for="email"> Email </mat-label>
       <input
         matInput
         formControlName="email"
@@ -14,19 +11,14 @@
         id="email"
         autocomplete="off"
         required
-      >
+      />
       <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
         Обязательное поле
       </mat-error>
-      <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-        Неправильный Email
-      </mat-error>
+      <mat-error *ngIf="loginForm.get('email')?.hasError('email')"> Неправильный Email </mat-error>
     </mat-form-field>
-    </div>
     <mat-form-field appearance="outline">
-      <mat-label for="password">
-        Password
-      </mat-label>
+      <mat-label for="password"> Password </mat-label>
       <input
         matInput
         formControlName="password"
@@ -40,9 +32,11 @@
         Обязательное поле
       </mat-error>
       <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
-       Пароль должен быть не менее 8 символов
+        Пароль должен быть не менее 8 символов
       </mat-error>
     </mat-form-field>
-    <button mat-button color="accent" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+    <button mat-flat-button color="primary" [disabled]="loginForm.invalid" (click)="login()">
+      Войти
+    </button>
   </form>
 </section>

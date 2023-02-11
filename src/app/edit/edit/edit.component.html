@@ -1,0 +1,164 @@
+<ng-container [ngSwitch]="typeForm$ | async">
+  <ng-container *ngSwitchCase="'main'">
+    <ng-container
+      *ngTemplateOutlet="MainEnterpriseFormTemplate; context: { $implicit: formMainEnterprise }"
+    ></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'sub'">
+    <ng-container
+      *ngTemplateOutlet="SubEnterpriseFormTemplate; context: { $implicit: formSubEnterprise }"
+    ></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #MainEnterpriseFormTemplate let-formMainEnterprise>
+  <ng-container>
+    <form [formGroup]="formMainEnterprise">
+      <mat-form-field appearance="outline">
+        <mat-label for="fullName">Полное наименование организации</mat-label>
+        <input
+          matInput
+          formControlName="fullName"
+          type="text"
+          name="fullName"
+          id="fullName"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="shortName">Краткое наименование организации</mat-label>
+        <input
+          matInput
+          formControlName="shortName"
+          type="text"
+          name="shortName"
+          id="shortName"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="INN">ИНН</mat-label>
+        <input
+          matInput
+          formControlName="INN"
+          type="number"
+          name="INN"
+          id="INN"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="KPP">КПП</mat-label>
+        <input
+          matInput
+          formControlName="KPP"
+          type="number"
+          name="KPP"
+          id="KPP"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="founder">Учредитель (ФИО)</mat-label>
+        <input
+          matInput
+          formControlName="founder"
+          type="text"
+          name="founder"
+          id="founder"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="addres">Адрес организаци</mat-label>
+        <input
+          matInput
+          formControlName="addres"
+          type="text"
+          name="addres"
+          id="addres"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="phone">Номер телефона</mat-label>
+        <input
+          matInput
+          formControlName="phone"
+          type="text"
+          name="phone"
+          id="phone"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <button
+        color="primary"
+        mat-flat-button
+        type="button"
+        (click)="updateMainEnterprise(formMainEnterprise.value)"
+        [disabled]="formMainEnterprise.invalid"
+      >
+        Изменить
+      </button>
+    </form>
+  </ng-container>
+</ng-template>
+
+<ng-template #SubEnterpriseFormTemplate let-formSubEnterprise>
+  <ng-container>
+    <form [formGroup]="formSubEnterprise">
+      <mat-form-field appearance="outline">
+        <mat-label for="officeAdress">Адрес офиса</mat-label>
+        <input
+          matInput
+          formControlName="officeAdress"
+          type="text"
+          name="officeAdress"
+          id="officeAdress"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="phone">Номер телефона</mat-label>
+        <input
+          matInput
+          formControlName="phone"
+          type="text"
+          name="phone"
+          id="phone"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label for="official">Должностное лицо(ФИО)</mat-label>
+        <input
+          matInput
+          formControlName="official"
+          type="text"
+          name="official"
+          id="official"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <button
+        color="primary"
+        mat-flat-button
+        type="button"
+        (click)="updateSubEnterprise(formSubEnterprise.value)"
+        [disabled]="formSubEnterprise.invalid"
+      >
+        Изменить
+      </button>
+    </form>
+  </ng-container>
+</ng-template>

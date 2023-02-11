@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import {
-  GetEnterpisesAction,
-  LoadEnterpisesAction,
-} from 'src/app/store/actions/enterprise.action';
+import { GetEnterpisesAction } from 'src/app/store/actions/enterprise.action';
 import { selectAllEnterprises } from 'src/app/store/selectors/enterprise.selector';
 import { EnterprisesState } from 'src/app/store/state/app.state';
 @Component({
@@ -18,9 +15,7 @@ export class MainComponent implements OnInit {
 
   public enterprises$!: Observable<EnterprisesState>;
 
-  public view$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    'listView'
-  );
+  public view$: BehaviorSubject<string> = new BehaviorSubject<string>('listView');
 
   public toggleView(chipsValue: string) {
     if (this.view$.getValue() === chipsValue) {
