@@ -9,7 +9,6 @@ export interface IMainEnterprise {
   founder: string;
   addres: string;
   phone: string;
-  subEnterprises?: Array<ISubEnterprise>;
 }
 
 export type MainEnterprise = {

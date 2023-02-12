@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTreeModule } from '@angular/material/tree';
 @NgModule({
   declarations: [ListViewComponent, TreeViewComponent, MainComponent],
   imports: [
@@ -26,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatListModule,
     MatButtonModule,
+    MatTreeModule,
   ],
 })
 export class ViewModule {}
