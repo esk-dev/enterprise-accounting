@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
 
   public view$: BehaviorSubject<string> = new BehaviorSubject<string>('listView');
 
-  public toggleView(chipsValue: string) {
+  public toggleView(chipsValue: string): void {
     if (this.view$.getValue() === chipsValue) {
       return;
     }

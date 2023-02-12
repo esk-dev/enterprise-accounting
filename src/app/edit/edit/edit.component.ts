@@ -1,45 +1,44 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, map, mergeMap, ReplaySubject, Subject, takeUntil } from 'rxjs';
-import { IMainEnterprise } from 'src/app/models/main-enterprise';
+import {
+  BehaviorSubject,
+  filter,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  Subject,
+  takeUntil,
+} from 'rxjs';
+import {
+  IMainEnterprise
+} from 'src/app/models/main-enterprise';
 import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import {
   UpdateMainEnterpiseAction,
   UpdateSubEnterpiseAction,
 } from 'src/app/store/actions/enterprise.action';
 import { selectEnterpriseById } from 'src/app/store/selectors/enterprise.selector';
-
+import { FormDataService } from './../../_services/form-data.service';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditComponent implements OnInit, OnDestroy {
-  public typeForm$: ReplaySubject<string> = new ReplaySubject<string>();
+  private typeForm$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  public formSubEnterprise: FormGroup = new FormGroup({
-    _id: new FormControl<string>(''),
-    officeAdress: new FormControl<string>('', [Validators.required]),
-    phone: new FormControl<string>('', [Validators.required]),
-    official: new FormControl<string>('', [Validators.required]),
-  });
+  public fields$!: Observable<any>;
 
-  public formMainEnterprise: FormGroup = new FormGroup({
-    _id: new FormControl<string>(''),
-    fullName: new FormControl<string>('', [Validators.required]),
-    shortName: new FormControl<string>('', [Validators.required]),
-    INN: new FormControl<number>(0, [Validators.required]),
-    KPP: new FormControl<number>(0, [Validators.required]),
-    founder: new FormControl<string>('', [Validators.required]),
-    addres: new FormControl<string>('', [Validators.required]),
-    phone: new FormControl<string>('', [Validators.required]),
-  });
-
-  constructor(private activatedRoute: ActivatedRoute, private store: Store) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private store: Store,
+    private formDataService: FormDataService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -49,30 +48,28 @@ export class EditComponent implements OnInit, OnDestroy {
         mergeMap((id: number) => {
           return this.store.select(selectEnterpriseById(id.toString()));
         }),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
-      .subscribe((data: any) => {
-        if (data.hasOwnProperty('fullName')) {
-          this.formMainEnterprise.setValue({
-            _id: data._id,
-            fullName: data.fullName,
-            shortName: data.shortName,
-            INN: data.INN,
-            KPP: data.KPP,
-            founder: data.founder,
-            addres: data.addres,
-            phone: data.phone,
-          });
-          this.typeForm$.next('main');
-        }
-        if (data.hasOwnProperty('officeAdress')) {
-          this.formSubEnterprise.setValue({
-            _id: data._id,
-            officeAdress: data.officeAdress,
-            phone: data.phone,
-            official: data.official,
-          });
-          this.typeForm$.next('sub');
+      .subscribe((data: Object | null) => {
+        console.log(data);
+        switch (data?.hasOwnProperty('fullName')) {
+          case true:
+            this.fields$ = this.formDataService.getMainEnterpriseFields(
+              data as IMainEnterprise
+            );
+            this.typeForm$.next('main');
+            break;
+
+          case false:
+            this.fields$ = this.formDataService.getSubEnterpriseFields(
+              data as ISubEnterprise
+            );
+            this.typeForm$.next('sub');
+
+            break;
+          default:
+            this.fields$ = of([]);
+            break;
         }
       });
   }
@@ -81,11 +78,26 @@ export class EditComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
-  public updateMainEnterprise(updatedMainEnterprise: IMainEnterprise) {
+  public update(values: any): void {
+    switch (this.typeForm$.getValue()) {
+      case 'main':
+        this.updateMainEnterprise(values);
+        break;
+
+      case 'sub':
+        this.updateSubEnterprise(values);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private updateMainEnterprise(updatedMainEnterprise: IMainEnterprise): void {
     this.store.dispatch(UpdateMainEnterpiseAction({ updatedMainEnterprise }));
   }
 
-  public updateSubEnterprise(updatedSubEnterprise: ISubEnterprise) {
+  private updateSubEnterprise(updatedSubEnterprise: ISubEnterprise): void {
     this.store.dispatch(UpdateSubEnterpiseAction({ updatedSubEnterprise }));
   }
 }

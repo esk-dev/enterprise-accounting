@@ -23,7 +23,7 @@ export const selectSubEnterprises = createSelector(
 
 export const selectEnterpriseById = (id: string | number) =>
   createSelector(selectAllEnterprises, (enterprises: EnterprisesState) => {
-    const selectedEnterprise: Array<any> = [];
+    const selectedEnterprise: Array<IMainEnterprise | ISubEnterprise> = [];
     Object.values(enterprises).forEach((arr) => {
       arr.forEach((el: any) => {
         if (el._id === id) {

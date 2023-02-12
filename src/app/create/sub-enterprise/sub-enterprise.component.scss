@@ -2,14 +2,3 @@
   width: 100%;
 }
 
-form {
-  display: flex;
-  flex-flow: column nowrap;
-  column-gap: 10px;
-  width: max-content;
-  align-items: flex-start;
-  width: 100%;
-  mat-form-field {
-    width: 100%;
-  }
-}

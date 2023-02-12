@@ -1,33 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { IMainEnterprise } from 'src/app/models/main-enterprise';
+import { ISubEnterprise } from 'src/app/models/sub-enterprise';
+import { FormDataService } from 'src/app/_services/form-data.service';
 import { CreateMainEnterpiseAction } from 'src/app/store/actions/enterprise.action';
 
 @Component({
   selector: 'app-main-enterprise',
   templateUrl: './main-enterprise.component.html',
   styleUrls: ['./main-enterprise.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainEnterpriseComponent implements OnInit {
-  public formMainEnterprise!: FormGroup;
+  public fields$!: Observable<any>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private formDataService: FormDataService) {}
 
   ngOnInit(): void {
-    this.formMainEnterprise = new FormGroup({
-      _id: new FormControl<string>(''),
-      fullName: new FormControl<string>('', [Validators.required]),
-      shortName: new FormControl<string>('', [Validators.required]),
-      INN: new FormControl<number>(0, [Validators.required]),
-      KPP: new FormControl<number>(0, [Validators.required]),
-      founder: new FormControl<string>('', [Validators.required]),
-      addres: new FormControl<string>('', [Validators.required]),
-      phone: new FormControl<string>('', [Validators.required]),
-    });
+    this.fields$ = this.formDataService.getMainEnterpriseFields();
   }
 
-  public create(newMainEnterprise: IMainEnterprise) {
+  public invokeCreation(values: IMainEnterprise | ISubEnterprise): void {
+    this.create(values as IMainEnterprise);
+  }
+
+  private create(newMainEnterprise: IMainEnterprise): void {
     this.store.dispatch(CreateMainEnterpiseAction({ newMainEnterprise }));
   }
 }
