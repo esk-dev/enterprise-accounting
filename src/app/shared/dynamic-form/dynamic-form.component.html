@@ -1,0 +1,11 @@
+
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+  <ng-container *ngFor="let field of fields">
+    <app-dynamic-form-field [field]="field" [form]="form"></app-dynamic-form-field>
+  </ng-container>
+
+  <div>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">Сохранить</button>
+  </div>
+</form>

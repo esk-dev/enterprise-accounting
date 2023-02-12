@@ -1,21 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { GetEnterpisesAction } from '../../store/actions/enterprise.action';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { EnterprisesState } from 'src/app/store/state/app.state';
 import { Observable } from 'rxjs';
-import { selectAllEnterprises } from 'src/app/store/selectors/enterprise.selector';
+import { IMainEnterprise } from 'src/app/models/main-enterprise';
+import { ISubEnterprise } from 'src/app/models/sub-enterprise';
+
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListViewComponent implements OnInit {
-  public enterprises$: Observable<EnterprisesState> = this.store.select(selectAllEnterprises);
+export class ListViewComponent {
+  @Input() enterprises$!: Observable<EnterprisesState>;
 
-  constructor(private store: Store) {}
-
-  ngOnInit(): void {
-    this.store.dispatch(GetEnterpisesAction());
-    console.log(this.enterprises$);
+  trackById(index: number, item: IMainEnterprise | ISubEnterprise) {
+    return item._id;
   }
 }

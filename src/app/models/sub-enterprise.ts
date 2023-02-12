@@ -1,6 +1,13 @@
-export interface SubEnterprise {
-  readonly _id: number;
+export interface ISubEnterprise {
+  _id: string;
   officeAdress: string;
-  phone: number;
+  phone: string;
   official: string;
 }
+
+export type SubEnterprise = {
+  _id: string;
+  officeAdress: string;
+  phone: string;
+  official: string;
+};

@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { SubEnterprise } from 'src/app/models/sub-enterprise';
+import { IMainEnterprise } from 'src/app/models/main-enterprise';
+import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import {
   LoadEnterpisesAction,
   CreateMainEnterpiseAction,
@@ -8,7 +9,7 @@ import {
   UpdateSubEnterpiseAction,
 } from '../actions/enterprise.action';
 import { EnterprisesState, initalEnterprisesState } from './../state/app.state';
-// TODO Логика проверки сущностей - добавить id для проверки в сущность
+
 export const enterpriseReducer = createReducer(
   initalEnterprisesState,
   on(
@@ -17,26 +18,36 @@ export const enterpriseReducer = createReducer(
       ...payload,
     }),
   ),
+
   on(CreateMainEnterpiseAction, (state, { newMainEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.mainEnterprises.unshift(newMainEnterprise);
+    newState.mainEnterprises = [{ ...newMainEnterprise }];
     return newState;
   }),
+
   on(UpdateMainEnterpiseAction, (state, { updatedMainEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.mainEnterprises.filter((el) => el._id !== updatedMainEnterprise._id);
-    newState.mainEnterprises.unshift(updatedMainEnterprise);
+    const enterprise = newState.mainEnterprises.filter(
+      (el: IMainEnterprise) => el._id !== updatedMainEnterprise._id,
+    );
+    enterprise.push(updatedMainEnterprise);
+    newState.mainEnterprises = enterprise;
     return newState;
   }),
+
   on(CreateSubEnterpiseAction, (state, { newSubEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.subEnterprises.unshift(newSubEnterprise);
+    newState.subEnterprises = [{ ...newSubEnterprise }];
     return newState;
   }),
+
   on(UpdateSubEnterpiseAction, (state, { updatedSubEnterprise }): EnterprisesState => {
     const newState = { ...state };
-    newState.subEnterprises.filter((el: SubEnterprise) => el._id !== updatedSubEnterprise._id);
-    newState.subEnterprises.unshift(updatedSubEnterprise);
+    const enterprise = newState.subEnterprises.filter(
+      (el: ISubEnterprise) => el._id !== updatedSubEnterprise._id,
+    );
+    enterprise.push(updatedSubEnterprise);
+    newState.subEnterprises = enterprise;
     return newState;
   }),
 );

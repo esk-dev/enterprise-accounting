@@ -1,1 +1,47 @@
-<router-outlet></router-outlet>
+<div class="view-selector">
+  <mat-chip-list aria-label="View selection">
+    <mat-chip
+      (click)="toggleView('listView')"
+      [selected]="(view$ | async) === 'listView'"
+      color="accent"
+    >
+      <mat-icon fontIcon="view_list"></mat-icon>
+      Список
+    </mat-chip>
+    <mat-chip
+      (click)="toggleView('treeView')"
+      [selected]="(view$ | async) === 'treeView'"
+      color="accent"
+    >
+      <mat-icon fontIcon="segment"></mat-icon>
+      Дерево
+    </mat-chip>
+  </mat-chip-list>
+</div>
+<mat-divider></mat-divider>
+<section class="view-content">
+  <ng-container [ngSwitch]="view$ | async">
+    <ng-container *ngSwitchCase="'treeView'">
+      <ng-container
+        *ngTemplateOutlet="TreeViewTemplate; context: { $implicit: enterprises$ }"
+      ></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'listView'">
+      <ng-container
+        *ngTemplateOutlet="ListViewTemplate; context: { $implicit: enterprises$ }"
+      ></ng-container>
+    </ng-container>
+  </ng-container>
+</section>
+
+<ng-template #TreeViewTemplate let-enterprises>
+  <ng-container>
+    <app-tree-view [enterprises$]="enterprises"></app-tree-view>
+  </ng-container>
+</ng-template>
+
+<ng-template #ListViewTemplate let-enterprises>
+  <ng-container>
+    <app-list-view [enterprises$]="enterprises"></app-list-view>
+  </ng-container>
+</ng-template>

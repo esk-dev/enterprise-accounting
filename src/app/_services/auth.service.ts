@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
-import { User } from './../models/user';
-const Users: User[] = [
+import { IUser } from './../models/user';
+const Users: IUser[] = [
   {
-    email: 'q@gmail.com',
-    password: '12345678',
+    email: 'admin@gmail.com',
+    password: 'admin1234',
     role: 'ROLE_ADMIN',
+  },
+  {
+    email: 'worker@gmail.com',
+    password: 'worker1234',
+    role: 'ROLE_WORKER',
   },
 ];
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private UserDB: Observable<User[]> = of(Users);
+  private UserDB: Observable<IUser[]> = of(Users);
 
-  public login(email: string, password: string): Observable<User> {
+  public login(email: string, password: string): Observable<IUser> {
     return this.findUser(email).pipe(
-      map((userData: User) => {
+      map((userData: IUser) => {
         if (!!this.validatePassword(userData.password, password)) {
           return userData;
         } else {
@@ -26,14 +31,10 @@ export class AuthService {
     );
   }
 
-  // public logout(): void {
-
-  // }
-
-  private findUser(email: string): Observable<User> {
+  private findUser(email: string): Observable<IUser> {
     return this.UserDB.pipe(
       map((users) => {
-        const user: User[] = users.filter((el) => el.email === email);
+        const user: IUser[] = users.filter((el) => el.email === email);
         console.log(user);
         if (user[0]) {
           return user[0];

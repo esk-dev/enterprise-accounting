@@ -1,0 +1,23 @@
+<mat-form-field appearance="outline" [formGroup]="form" *ngIf='field.show'>
+  <mat-label [attr.for]="field.key">{{field.label}}</mat-label>
+
+  <ng-container [ngSwitch]="field.controlType">
+   
+    <input 
+    matInput 
+    *ngSwitchCase="'text'" 
+    [formControlName]="field.key"
+    [id]="field.key" 
+    [type]="field.controlType"
+    > 
+
+
+  <input matInput *ngSwitchCase="'number'" [formControlName]="field.key"
+            [id]="field.key" [type]="field.controlType">
+
+  </ng-container>
+  
+  <mat-error *ngIf="!isValid">
+        Обязательно к заполнению
+  </mat-error>
+</mat-form-field>

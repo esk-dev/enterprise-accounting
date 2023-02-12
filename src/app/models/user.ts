@@ -1,6 +1,6 @@
-type Role = 'ROLE_ADMIN' | 'ROLE_USER';
+type Role = 'ROLE_ADMIN' | 'ROLE_WORKER';
 
-export interface User {
+export interface IUser {
   email: string;
   password: string;
   role: Role;
