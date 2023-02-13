@@ -1,0 +1,69 @@
+<ng-container *ngIf="enterprises$ | async as nodes">
+  <ng-container *ngFor="let node of nodes">
+    <mat-list class="node">
+      <mat-card>
+        <button mat-icon-button (click)="nodeClicked(node.mainEnterprise._id)">разв</button>
+
+        {{ node.mainEnterprise.fullName }}
+
+        <ng-container *ngIf="isExpanded(node.mainEnterprise._id)">
+          <mat-list-item class="node-content">
+            <div mat-list-icon>
+              <a
+                *appRole
+                [routerLink]="['/edit/main-enterprise', node.mainEnterprise._id]"
+                mat-icon-button
+                color="primary"
+                ><mat-icon mat-list-icon>mode_edit</mat-icon></a
+              >
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>Полное наименование организации: </mat-card-subtitle>
+              <mat-card-title>{{ node.mainEnterprise.fullName }}</mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>Краткое наименование организаци: </mat-card-subtitle
+              ><mat-card-title>{{ node.mainEnterprise.shortName }}</mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>ИНН: </mat-card-subtitle>
+              <mat-card-title> {{ node.mainEnterprise.INN }}</mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>КПП: </mat-card-subtitle>
+              <mat-card-title> {{ node.mainEnterprise.KPP }}</mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>Учредитель: </mat-card-subtitle
+              ><mat-card-title> {{ node.mainEnterprise.founder }}</mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>Адрес: </mat-card-subtitle>
+              <mat-card-title>
+                {{ node.mainEnterprise.addres }}
+              </mat-card-title>
+            </div>
+            <div mat-line>
+              <mat-card-subtitle>Номер телефона:</mat-card-subtitle>
+              <mat-card-title> {{ node.mainEnterprise.phone }}</mat-card-title>
+            </div>
+          </mat-list-item>
+
+          <div class="sub-node">
+            <span>Expand</span>
+            <ng-container *ngIf="node.subEnterprises">
+              <ng-container *ngFor="let subRow of node.subEnterprises">
+                <div class="sub-node-item">
+                  <mat-card-subtitle (click)="nodeClicked(subRow._id)">Филиал</mat-card-subtitle>
+                  <ng-container *ngIf="isExpanded(subRow._id)">
+                    {{ subRow | json }}
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+      </mat-card>
+    </mat-list>
+  </ng-container>
+</ng-container>

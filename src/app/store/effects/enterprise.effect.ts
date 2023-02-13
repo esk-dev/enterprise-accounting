@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, mergeMap, switchMap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { EnterpriseService } from 'src/app/_services/enterprise.service';
 import {
   LoadEnterpisesAction,
@@ -20,6 +21,7 @@ export class EnterpriseEffects {
     private actions$: Actions,
     private enterpriseService: EnterpriseService,
     private store: Store,
+    private route: Router,
   ) {}
 
   getEnterprises$ = createEffect(() => {
@@ -38,9 +40,10 @@ export class EnterpriseEffects {
     return this.actions$.pipe(
       ofType(CreateMainEnterpiseAction),
       switchMap(({ newMainEnterprise }) => {
-        return this.enterpriseService
-          .createMainEnterprise(newMainEnterprise)
-          .pipe(map((payload) => LoadEnterpisesAction({ payload })));
+        return this.enterpriseService.createMainEnterprise(newMainEnterprise).pipe(
+          map((payload) => LoadEnterpisesAction({ payload })),
+          tap(() => this.route.navigateByUrl('/view')),
+        );
       }),
     );
   });
@@ -54,6 +57,7 @@ export class EnterpriseEffects {
             console.log(payload);
             return LoadEnterpisesAction({ payload });
           }),
+          tap(() => this.route.navigateByUrl('/view')),
         );
       }),
     );
@@ -63,9 +67,10 @@ export class EnterpriseEffects {
     return this.actions$.pipe(
       ofType(CreateSubEnterpiseAction),
       switchMap(({ newSubEnterprise, mainEnterpriseId }) => {
-        return this.enterpriseService
-          .createSubEnterprise(newSubEnterprise, mainEnterpriseId)
-          .pipe(map((payload) => LoadEnterpisesAction({ payload })));
+        return this.enterpriseService.createSubEnterprise(newSubEnterprise, mainEnterpriseId).pipe(
+          map((payload) => LoadEnterpisesAction({ payload })),
+          tap(() => this.route.navigateByUrl('/view')),
+        );
       }),
     );
   });
@@ -79,6 +84,7 @@ export class EnterpriseEffects {
             console.log(payload);
             return LoadEnterpisesAction({ payload });
           }),
+          tap(() => this.route.navigateByUrl('/view')),
         );
       }),
     );
