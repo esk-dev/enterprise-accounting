@@ -8,10 +8,12 @@ import { MainComponent } from './main/main.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTreeModule } from '@angular/material/tree';
 @NgModule({
-  declarations: [ListViewComponent, TreeViewComponent, MainComponent],
+  declarations: [TreeViewComponent, ListViewComponent, MainComponent],
   imports: [
     RouterModule.forChild([
       {
@@ -26,6 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatListModule,
     MatButtonModule,
+    MatTreeModule,
+    MatCardModule,
   ],
 })
 export class ViewModule {}

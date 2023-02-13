@@ -1,56 +1,52 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { EnterprisesState, initalEnterprisesState } from './../state/app.state';
-import { IMainEnterprise } from './../../models/main-enterprise';
-import { ISubEnterprise } from './../../models/sub-enterprise';
+import { IMainEnterprise } from 'src/app/models/main-enterprise';
+import { ISubEnterprise } from 'src/app/models/sub-enterprise';
+import { EnterpriseState } from './../state/app.state';
+// import { IMainEnterprise } from './../../models/main-enterprise';
+// import { ISubEnterprise } from './../../models/sub-enterprise';
 
-export const selectEnterprises = createFeatureSelector<EnterprisesState>('enterprises');
+export const selectEnterprises = createFeatureSelector<Array<EnterpriseState>>('enterprises');
 
 export const selectAllEnterprises = createSelector(
   selectEnterprises,
-  (state: EnterprisesState) => state,
+  (state: Array<EnterpriseState>) => state,
 );
 
 export const selectMainEnterprises = createSelector(
   selectEnterprises,
-  (state: EnterprisesState) => state.mainEnterprises,
+  (state: Array<EnterpriseState>) =>
+    state.map((element: EnterpriseState) => element.mainEnterprise),
 );
 
 export const selectSubEnterprises = createSelector(
   selectEnterprises,
-  (state: EnterprisesState) => state.subEnterprises,
+  (state: Array<EnterpriseState>) =>
+    state.map((element: EnterpriseState) => element.subEnterprises).flatMap((v) => v),
 );
 
-export const selectEnterpriseById = (id: string | number) =>
-  createSelector(selectAllEnterprises, (enterprises: EnterprisesState) => {
-    const selectedEnterprise: Array<IMainEnterprise | ISubEnterprise> = [];
-    Object.values(enterprises).forEach((arr) => {
-      arr.forEach((el: any) => {
-        if (el._id === id) {
-          selectedEnterprise.push(el);
-        }
-      });
-    });
-    return selectedEnterprise.length !== 0 ? selectedEnterprise[0] : null;
-  });
+// export const selectEnterpriseById = (id: string | number) =>
+//   createSelector(selectAllEnterprises, (enterprises: Array<EnterpriseState>) => {
+//     const selectedEnterprise: Array<IMainEnterprise | ISubEnterprise> = [];
+
+//     enterprises.forEach((arr) => {
+//       arr.forEach((el: any) => {
+//         if (el._id === id) {
+//           selectedEnterprise.push(el);
+//         }
+//       });
+//     });
+//     return selectedEnterprise.length !== 0 ? selectedEnterprise[0] : null;
+//   });
 
 // Unused
 export const selectMainEnterprisesById = (mainEnterpriseId: string) =>
   createSelector(selectMainEnterprises, (mainEnterprises: IMainEnterprise[]) => {
     const mainEnterpriseById = mainEnterprises.filter((el) => el._id === mainEnterpriseId);
-    if (mainEnterpriseById.length === 0) {
-      return null;
-    } else {
-      return mainEnterpriseById[0];
-    }
+    return mainEnterpriseById ? mainEnterpriseById[0] : null;
   });
 
 export const selectSubEnterprisesById = (subEnterpriseId: string) =>
   createSelector(selectSubEnterprises, (subEnterprises: ISubEnterprise[]) => {
     const subEnterpriseById = subEnterprises.filter((el) => el._id === subEnterpriseId);
-    if (subEnterpriseById.length === 0) {
-      return null;
-    } else {
-      return subEnterpriseById[0];
-    }
+    return subEnterpriseById ? subEnterpriseById[0] : null;
   });

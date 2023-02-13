@@ -7,13 +7,13 @@ export interface UserState {
   user: IUser;
 }
 
-export interface EnterprisesState {
-  mainEnterprises: Array<IMainEnterprise>;
+export interface EnterpriseState {
+  mainEnterprise: IMainEnterprise;
   subEnterprises: Array<ISubEnterprise>;
 }
 
 export interface AppState {
-  enterprises: EnterprisesState;
+  enterprises: Array<EnterpriseState>;
   user: UserState;
 }
 
@@ -22,7 +22,9 @@ export const initalUserState: UserState = {
   user: {} as IUser,
 };
 
-export const initalEnterprisesState: EnterprisesState = {
-  mainEnterprises: [],
-  subEnterprises: [],
-};
+export const initalEnterpriseState: Array<EnterpriseState> = [
+  {
+    mainEnterprise: {} as IMainEnterprise,
+    subEnterprises: [],
+  },
+];

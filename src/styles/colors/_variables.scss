@@ -17,24 +17,3 @@ $palette: (
   $light-accent,
   $light-warn
 );
-
-@function get-color($keys...) {
-  $value: $palette;
-
-  @each $key in $keys {
-    $value: map-get($value, $key);
-  }
-
-  @return $value;
-}
-// $light-primary: (
-//   default: map-get(mat.$blue-grey-palette, 800),
-//   light: map-get(mat.$blue-grey-palette, 600),
-//   dark: map-get(mat.$blue-grey-palette, 900),
-// );
-
-// $dark-primary: (
-//   default: map-get(mat.$gray-palette, 400),
-//   light: map-get(mat.$gray-palette, 400),
-//   dark: map-get(mat.$gray-palette, 400),
-// );

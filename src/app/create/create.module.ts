@@ -18,7 +18,7 @@ import { SubEnterpriseComponent } from './sub-enterprise/sub-enterprise.componen
         component: MainEnterpriseComponent,
       },
       {
-        path: 'sub-enterprise',
+        path: 'sub-enterprise/:id',
         component: SubEnterpriseComponent,
       },
     ]),

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { IMainEnterprise } from 'src/app/models/main-enterprise';
-import { ISubEnterprise } from 'src/app/models/sub-enterprise';
+// import { IMainEnterprise } from 'src/app/models/main-enterprise';
+// import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import {
   LoadEnterpisesAction,
   CreateMainEnterpiseAction,
@@ -8,46 +8,44 @@ import {
   CreateSubEnterpiseAction,
   UpdateSubEnterpiseAction,
 } from '../actions/enterprise.action';
-import { EnterprisesState, initalEnterprisesState } from './../state/app.state';
+import { EnterpriseState, initalEnterpriseState } from './../state/app.state';
 
 export const enterpriseReducer = createReducer(
-  initalEnterprisesState,
+  initalEnterpriseState,
+  on(LoadEnterpisesAction, (state, { payload }): Array<EnterpriseState> => {
+    return payload;
+  }),
+
+  on(CreateMainEnterpiseAction, (state, { newMainEnterprise }): Array<EnterpriseState> => {
+    const newState = [...state];
+    return [...newState, { mainEnterprise: newMainEnterprise, subEnterprises: [] }];
+  }),
+
+  on(UpdateMainEnterpiseAction, (state, { updatedMainEnterprise }): Array<EnterpriseState> => {
+    const newState = [...state];
+    return newState.map((element) => {
+      if (element.mainEnterprise._id !== updatedMainEnterprise._id) return element;
+      return { ...element, mainEnterprise: updatedMainEnterprise };
+    });
+  }),
+
   on(
-    LoadEnterpisesAction,
-    (state, { payload }): EnterprisesState => ({
-      ...payload,
-    }),
+    CreateSubEnterpiseAction,
+    (state, { newSubEnterprise, mainEnterpriseId }): Array<EnterpriseState> => {
+      const newState = [...state];
+      return newState.map((e) => {
+        if (e.mainEnterprise._id !== mainEnterpriseId) return e;
+        return { ...e, subEnterprises: [...e.subEnterprises, { ...newSubEnterprise }] };
+      });
+    },
   ),
 
-  on(CreateMainEnterpiseAction, (state, { newMainEnterprise }): EnterprisesState => {
-    const newState = { ...state };
-    newState.mainEnterprises = [{ ...newMainEnterprise }];
-    return newState;
-  }),
-
-  on(UpdateMainEnterpiseAction, (state, { updatedMainEnterprise }): EnterprisesState => {
-    const newState = { ...state };
-    const enterprise = newState.mainEnterprises.filter(
-      (el: IMainEnterprise) => el._id !== updatedMainEnterprise._id,
-    );
-    enterprise.push(updatedMainEnterprise);
-    newState.mainEnterprises = enterprise;
-    return newState;
-  }),
-
-  on(CreateSubEnterpiseAction, (state, { newSubEnterprise }): EnterprisesState => {
-    const newState = { ...state };
-    newState.subEnterprises = [{ ...newSubEnterprise }];
-    return newState;
-  }),
-
-  on(UpdateSubEnterpiseAction, (state, { updatedSubEnterprise }): EnterprisesState => {
-    const newState = { ...state };
-    const enterprise = newState.subEnterprises.filter(
-      (el: ISubEnterprise) => el._id !== updatedSubEnterprise._id,
-    );
-    enterprise.push(updatedSubEnterprise);
-    newState.subEnterprises = enterprise;
-    return newState;
+  on(UpdateSubEnterpiseAction, (state, { updatedSubEnterprise }): Array<EnterpriseState> => {
+    const newState = [...state];
+    return newState.map((e) => {
+      const arr = e.subEnterprises.filter((v) => v._id !== updatedSubEnterprise._id);
+      arr.push(updatedSubEnterprise);
+      return { ...e, subEnterprises: arr };
+    });
   }),
 );

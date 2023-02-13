@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+// import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { ISubEnterprise } from 'src/app/models/sub-enterprise';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { IMainEnterprise } from 'src/app/models/main-enterprise';
-import { FormDataService } from 'src/app/_services/form-data.service';
+import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import { CreateSubEnterpiseAction } from 'src/app/store/actions/enterprise.action';
+import { FormDataService } from 'src/app/_services/form-data.service';
 
 @Component({
   selector: 'app-sub-enterprise',
@@ -16,17 +17,31 @@ import { CreateSubEnterpiseAction } from 'src/app/store/actions/enterprise.actio
 export class SubEnterpriseComponent implements OnInit {
   public fields$!: Observable<any>;
 
-  constructor(private store: Store, private formDataService: FormDataService) {}
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+
+  private mainEnterpriseId: string = '';
+
+  constructor(
+    private store: Store,
+    private formDataService: FormDataService,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.params
+      .pipe(
+        map((params) => params['id']),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((id) => (this.mainEnterpriseId = id));
     this.fields$ = this.formDataService.getSubEnterpriseFields();
   }
 
   public invokeCreation(values: ISubEnterprise | IMainEnterprise): void {
-    this.create(values as ISubEnterprise);
+    this.create(values as ISubEnterprise, this.mainEnterpriseId);
   }
 
-  private create(newSubEnterprise: ISubEnterprise): void {
-    this.store.dispatch(CreateSubEnterpiseAction({ newSubEnterprise }));
+  private create(newSubEnterprise: ISubEnterprise, mainEnterpriseId: string): void {
+    this.store.dispatch(CreateSubEnterpiseAction({ newSubEnterprise, mainEnterpriseId }));
   }
 }

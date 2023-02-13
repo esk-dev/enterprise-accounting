@@ -1,0 +1,30 @@
+.node {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+.node-header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.node-content {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 15px;
+  margin: 15px 0;
+}
+.node-content_row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  column-gap: 5px;
+  align-items: baseline;
+}
+.sub {
+  padding-left: 35px;
+}
+.action {
+  margin: 0 10px;
+}
