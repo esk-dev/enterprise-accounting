@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { map, mergeMap, switchMap } from 'rxjs';
 import { EnterpriseService } from 'src/app/_services/enterprise.service';
 import {
   LoadEnterpisesAction,
@@ -10,16 +11,22 @@ import {
   CreateSubEnterpiseAction,
   UpdateSubEnterpiseAction,
 } from '../actions/enterprise.action';
+import { selectAllEnterprises } from '../selectors/enterprise.selector';
 @Injectable({
   providedIn: 'root',
 })
 export class EnterpriseEffects {
-  constructor(private actions$: Actions, private enterpriseService: EnterpriseService) {}
+  constructor(
+    private actions$: Actions,
+    private enterpriseService: EnterpriseService,
+    private store: Store,
+  ) {}
 
   getEnterprises$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(GetEnterpisesAction),
-      mergeMap(() => {
+      concatLatestFrom(() => this.store.select(selectAllEnterprises)),
+      switchMap(() => {
         return this.enterpriseService
           .loadEnterprises()
           .pipe(map((payload) => LoadEnterpisesAction({ payload })));
@@ -30,7 +37,7 @@ export class EnterpriseEffects {
   createMainEnterprise$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CreateMainEnterpiseAction),
-      mergeMap(({ newMainEnterprise }) => {
+      switchMap(({ newMainEnterprise }) => {
         return this.enterpriseService
           .createMainEnterprise(newMainEnterprise)
           .pipe(map((payload) => LoadEnterpisesAction({ payload })));
@@ -41,7 +48,7 @@ export class EnterpriseEffects {
   updateMainEnterprise$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UpdateMainEnterpiseAction),
-      mergeMap(({ updatedMainEnterprise }) => {
+      switchMap(({ updatedMainEnterprise }) => {
         return this.enterpriseService.updateMainEnterprise(updatedMainEnterprise).pipe(
           map((payload) => {
             console.log(payload);
@@ -55,9 +62,9 @@ export class EnterpriseEffects {
   createSubEnterprise$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CreateSubEnterpiseAction),
-      mergeMap(({ newSubEnterprise }) => {
+      switchMap(({ newSubEnterprise, mainEnterpriseId }) => {
         return this.enterpriseService
-          .createSubEnterprise(newSubEnterprise)
+          .createSubEnterprise(newSubEnterprise, mainEnterpriseId)
           .pipe(map((payload) => LoadEnterpisesAction({ payload })));
       }),
     );
@@ -66,7 +73,7 @@ export class EnterpriseEffects {
   updateSubEnterprise$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(UpdateSubEnterpiseAction),
-      mergeMap(({ updatedSubEnterprise }) => {
+      switchMap(({ updatedSubEnterprise }) => {
         return this.enterpriseService.updateSubEnterprise(updatedSubEnterprise).pipe(
           map((payload) => {
             console.log(payload);

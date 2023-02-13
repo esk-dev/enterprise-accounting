@@ -11,7 +11,8 @@
       "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "airbnb-typescript/base"
+        "airbnb-typescript/base",
+        "plugin:prettier/recommended"
       ],
       "rules": {
         "prettier/prettier": ["error"],
@@ -37,7 +38,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "extends": ["plugin:@angular-eslint/template/recommended", "plugin:prettier/recommended"],
       "rules": {}
     },
     {

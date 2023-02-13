@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { EnterprisesState } from '../state/app.state';
+import { EnterpriseState } from '../state/app.state';
 import { IMainEnterprise } from './../../models/main-enterprise';
 import { ISubEnterprise } from './../../models/sub-enterprise';
 
@@ -7,7 +7,7 @@ export const GetEnterpisesAction = createAction('[ Enterprises ] Get Enterpises'
 
 export const LoadEnterpisesAction = createAction(
   '[ Enterprises ] Load Enterpise',
-  props<{ payload: EnterprisesState }>(),
+  props<{ payload: Array<EnterpriseState> }>(),
 );
 
 export const CreateMainEnterpiseAction = createAction(
@@ -22,7 +22,7 @@ export const UpdateMainEnterpiseAction = createAction(
 
 export const CreateSubEnterpiseAction = createAction(
   '[ SubEnterprise ] Create SubEnterpise',
-  props<{ newSubEnterprise: ISubEnterprise }>(),
+  props<{ newSubEnterprise: ISubEnterprise; mainEnterpriseId: string }>(),
 );
 
 export const UpdateSubEnterpiseAction = createAction(

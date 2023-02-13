@@ -16,7 +16,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'edit/:id',
+    path: 'edit',
     title: 'Редактирование организации',
     loadChildren: () => import('./edit/edit.module').then((m) => m.EditModule),
     canActivate: [AuthGuard, RoleGuard],

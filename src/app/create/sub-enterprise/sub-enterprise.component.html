@@ -1,1 +1,4 @@
-<app-dynamic-form [fields]="fields$ | async" (emitSubmittedValues)="invokeCreation($event)"></app-dynamic-form>
+<app-dynamic-form
+  [fields]="fields$ | async"
+  (emitSubmittedValues)="invokeCreation($event)"
+></app-dynamic-form>

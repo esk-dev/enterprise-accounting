@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { GetEnterpisesAction } from 'src/app/store/actions/enterprise.action';
 import { selectAllEnterprises } from 'src/app/store/selectors/enterprise.selector';
-import { EnterprisesState } from 'src/app/store/state/app.state';
+import { EnterpriseState } from 'src/app/store/state/app.state';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -13,7 +13,7 @@ import { EnterprisesState } from 'src/app/store/state/app.state';
 export class MainComponent implements OnInit {
   constructor(private store: Store) {}
 
-  public enterprises$!: Observable<EnterprisesState>;
+  public enterprises$!: Observable<Array<EnterpriseState>>;
 
   public view$: BehaviorSubject<string> = new BehaviorSubject<string>('listView');
 

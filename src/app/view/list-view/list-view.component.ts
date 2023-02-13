@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { EnterprisesState } from 'src/app/store/state/app.state';
+import { EnterpriseState } from 'src/app/store/state/app.state';
 import { Observable } from 'rxjs';
 import { IMainEnterprise } from 'src/app/models/main-enterprise';
 import { ISubEnterprise } from 'src/app/models/sub-enterprise';
@@ -11,7 +11,7 @@ import { ISubEnterprise } from 'src/app/models/sub-enterprise';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListViewComponent {
-  @Input() enterprises$!: Observable<EnterprisesState>;
+  @Input() enterprises$!: Observable<Array<EnterpriseState>>;
 
   trackById(index: number, item: IMainEnterprise | ISubEnterprise) {
     return item._id;
