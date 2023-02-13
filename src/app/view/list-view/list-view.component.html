@@ -1,4 +1,4 @@
-<mat-list>
+<section class="list-view__container">
   <div class="add-item">
     <a *appRole [routerLink]="['/create/main-enterprise']" mat-flat-button color="primary"
       >Добавить организацию<mat-icon mat-list-icon>add</mat-icon></a
@@ -7,8 +7,38 @@
   <ng-container *ngIf="enterprises$ | async as data">
     <ng-container *ngFor="let row of data">
       <h1 mat-subheader>Главная Организация</h1>
-      <mat-list-item class="list-item">
-        <div mat-list-icon>
+      <div class="list-line">
+        <div class="list-line_column">
+          <mat-card-subtitle>Полное наименование организации: </mat-card-subtitle>
+          <mat-card-subtitle>{{ row.mainEnterprise.fullName }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>Краткое наименование организаци: </mat-card-subtitle
+          ><mat-card-subtitle>{{ row.mainEnterprise.shortName }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>ИНН: </mat-card-subtitle>
+          <mat-card-subtitle> {{ row.mainEnterprise.INN }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>КПП: </mat-card-subtitle>
+          <mat-card-subtitle> {{ row.mainEnterprise.KPP }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>Учредитель: </mat-card-subtitle
+          ><mat-card-subtitle> {{ row.mainEnterprise.founder }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>Адрес: </mat-card-subtitle>
+          <mat-card-subtitle>
+            {{ row.mainEnterprise.addres }}
+          </mat-card-subtitle>
+        </div>
+        <div class="list-line_column" mat-line>
+          <mat-card-subtitle>Номер телефона:</mat-card-subtitle>
+          <mat-card-subtitle> {{ row.mainEnterprise.phone }}</mat-card-subtitle>
+        </div>
+        <div class="list-line_icon">
           <a
             *appRole
             [routerLink]="['/edit/main-enterprise', row.mainEnterprise._id]"
@@ -17,44 +47,32 @@
             ><mat-icon mat-list-icon>mode_edit</mat-icon></a
           >
         </div>
-        <span mat-line>
-          <mat-card-subtitle>Полное наименование организации: </mat-card-subtitle>
-          <mat-card-subtitle>{{ row.mainEnterprise.fullName }}</mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>Краткое наименование организаци: </mat-card-subtitle
-          ><mat-card-subtitle>{{ row.mainEnterprise.shortName }}</mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>ИНН: </mat-card-subtitle>
-          <mat-card-subtitle> {{ row.mainEnterprise.INN }}</mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>КПП: </mat-card-subtitle>
-          <mat-card-subtitle> {{ row.mainEnterprise.KPP }}</mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>Учредитель: </mat-card-subtitle
-          ><mat-card-subtitle> {{ row.mainEnterprise.founder }}</mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>Адрес: </mat-card-subtitle>
-          <mat-card-subtitle>
-            {{ row.mainEnterprise.addres }}
-          </mat-card-subtitle>
-        </span>
-        <span mat-line>
-          <mat-card-subtitle>Номер телефона:</mat-card-subtitle>
-          <mat-card-subtitle> {{ row.mainEnterprise.phone }}</mat-card-subtitle>
-        </span>
-      </mat-list-item>
+      </div>
       <mat-divider></mat-divider>
-      <div class="sub-row">
-        <div mat-subheader>Филиалы</div>
+      <div class="sub-lines">
+        <h1>Филиалы</h1>
         <ng-container *ngIf="row.subEnterprises">
           <ng-container *ngFor="let subRow of row.subEnterprises">
-            <mat-list-item class="list-item">
-              <span mat-list-icon>
+            <div class="list-line">
+              <div class="list-line_column">
+                <mat-card-subtitle>Адрес офиса: </mat-card-subtitle
+                ><mat-card-subtitle>
+                  {{ subRow.officeAdress }}
+                </mat-card-subtitle>
+              </div>
+              <div class="list-line_column">
+                <mat-card-subtitle>Номер телефона: </mat-card-subtitle>
+                <mat-card-subtitle>
+                  {{ subRow.phone }}
+                </mat-card-subtitle>
+              </div>
+              <div class="list-line_column">
+                <mat-card-subtitle> Представитель: </mat-card-subtitle>
+                <mat-card-subtitle>
+                  {{ subRow.official }}
+                </mat-card-subtitle>
+              </div>
+              <div  class="list-line_icon">
                 <a
                   *appRole
                   [routerLink]="['/edit/sub-enterprise', subRow._id]"
@@ -62,26 +80,8 @@
                   color="primary"
                   ><mat-icon mat-list-icon>mode_edit</mat-icon></a
                 >
-              </span>
-              <span mat-line>
-                <mat-card-subtitle>Адрес офиса: </mat-card-subtitle
-                ><mat-card-subtitle>
-                  {{ subRow.officeAdress }}
-                </mat-card-subtitle>
-              </span>
-              <span mat-line>
-                <mat-card-subtitle>Номер телефона: </mat-card-subtitle>
-                <mat-card-subtitle>
-                  {{ subRow.phone }}
-                </mat-card-subtitle>
-              </span>
-              <span mat-line>
-                <mat-card-subtitle> Представитель: </mat-card-subtitle>
-                <mat-card-subtitle>
-                  {{ subRow.official }}
-                </mat-card-subtitle>
-              </span>
-            </mat-list-item>
+              </div>
+            </div>
             <mat-divider></mat-divider>
           </ng-container>
         </ng-container>
@@ -97,4 +97,4 @@
       </div>
     </ng-container>
   </ng-container>
-</mat-list>
+</section>

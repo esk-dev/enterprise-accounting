@@ -1,6 +1,6 @@
 <ng-container *ngIf="enterprises$ | async as nodes">
   <ng-container *ngFor="let node of nodes">
-    <mat-list class="node">
+    <div class="node">
       <mat-card>
         <button mat-icon-button (click)="nodeClicked(node.mainEnterprise._id)">разв</button>
 
@@ -64,6 +64,6 @@
           </div>
         </ng-container>
       </mat-card>
-    </mat-list>
+    </div>
   </ng-container>
 </ng-container>

@@ -1,16 +1,22 @@
-@use '../../../styles/mixins/media-query' as mq;
-
-.sub-row {
-  margin-left: 35px;
-}
-.add-item {
-  margin: 15px auto;
-}
-
-.list-item {
-  span {
-    display: inline-flex;
+.list-line {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 15px;
+  margin: 15px 0;
+  .list-line_column,
+  .list-line_icon {
+    display: flex;
     flex-flow: row nowrap;
+    justify-content: flex-start;
+    column-gap: 5px;
     align-items: baseline;
   }
+}
+.add-item {
+  margin: 15px 0;
+}
+.sub-lines {
+  margin-left: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
