@@ -1,4 +1,4 @@
-<section>
+ <section class="node_container">
   <div class="node-header">
   <h1>Главные организаци</h1>
     <div class="action">
@@ -74,17 +74,17 @@
               </div>
               </div>
               <ng-container *ngIf="node.subEnterprises">
-                <ng-container *ngFor="let subRow of node.subEnterprises">
+                <ng-container *ngFor="let subNode of node.subEnterprises">
                   
                   <div class="node-header">
-                    <button mat-icon-button (click)="nodeClicked(subRow._id)">
-                    <mat-icon >{{ isExpanded(subRow._id) ? 'close' : 'chevron_right' }}</mat-icon>
+                    <button mat-icon-button (click)="nodeClicked(subNode._id)">
+                    <mat-icon >{{ isExpanded(subNode._id) ? 'close' : 'chevron_right' }}</mat-icon>
                     </button>
-                    <mat-card-title>{{ subRow.officeAdress }}</mat-card-title>
+                    <mat-card-title>{{ subNode.officeAdress }}</mat-card-title>
                     <div>
                       <a
                         *appRole
-                        [routerLink]="['/edit/sub-enterprise', subRow._id]"
+                        [routerLink]="['/edit/sub-enterprise', subNode._id]"
                         mat-icon-button
                         color="primary"
                         ><mat-icon >mode_edit</mat-icon></a
@@ -92,18 +92,18 @@
                     </div>
                   </div>
                   <div class="node-content">
-                    <ng-container *ngIf="isExpanded(subRow._id)">
+                    <ng-container *ngIf="isExpanded(subNode._id)">
                       <div class="node-content_row">
                         <mat-card-subtitle>Адрес офиса::</mat-card-subtitle>
-                        <mat-card-subtitle> {{ subRow.officeAdress }}</mat-card-subtitle>
+                        <mat-card-subtitle> {{ subNode.officeAdress }}</mat-card-subtitle>
                       </div>
                                             <div class="node-content_row">
                         <mat-card-subtitle>Номер телефона:</mat-card-subtitle>
-                        <mat-card-subtitle> {{ subRow.phone }}</mat-card-subtitle>
+                        <mat-card-subtitle> {{ subNode.phone }}</mat-card-subtitle>
                       </div>
                                             <div class="node-content_row">
                         <mat-card-subtitle>Представитель:</mat-card-subtitle>
-                        <mat-card-subtitle> {{ subRow.official }}</mat-card-subtitle>
+                        <mat-card-subtitle> {{ subNode.official }}</mat-card-subtitle>
                       </div>
                     </ng-container>
                   </div>

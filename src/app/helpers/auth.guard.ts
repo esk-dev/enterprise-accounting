@@ -10,7 +10,7 @@ import {
 import { map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectIsAuth } from './../store/selectors/user.selector';
-// import { AuthService } from './auth/auth.service';
+
 @Injectable({
   providedIn: 'root',
 })

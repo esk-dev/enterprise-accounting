@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, filter, mergeMap, takeUntil, Subject, Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { FormDataService } from 'src/app/_services/form-data.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   public fields$!: Observable<any>;
@@ -37,6 +37,10 @@ export class MainComponent implements OnInit {
       .subscribe((data: IMainEnterprise | null) => {
         this.fields$ = this.formDataService.getMainEnterpriseFields(data as IMainEnterprise);
       });
+  }
+  
+  ngOnDestroy(): void {
+      this.destroy$.next(true);
   }
 
   public invokeUpdate(values: ISubEnterprise | IMainEnterprise): void {

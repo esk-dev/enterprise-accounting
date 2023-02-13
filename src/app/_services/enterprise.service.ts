@@ -24,13 +24,13 @@ const DB: Array<EnterpriseState> = [
         officeAdress: '39114 Javier Shoal',
         phone: '627-234-0750',
         official: 'Caroline Conn',
-        _id: '132',
+        _id: '23',
       },
       {
         officeAdress: '39114 Javier Shoal',
         phone: '627-234-0750',
         official: 'Caroline Conn',
-        _id: '132',
+        _id: '13',
       },
     ],
   },
@@ -43,7 +43,7 @@ const DB: Array<EnterpriseState> = [
       founder: 'Gustaasdvo Lang I',
       addres: 'Hauck Foasdrks',
       phone: '(205) 434-0649 x4609',
-      _id: '123',
+      _id: '432',
     },
     subEnterprises: [
       {
@@ -59,31 +59,34 @@ const DB: Array<EnterpriseState> = [
   providedIn: 'root',
 })
 export class EnterpriseService {
-  private db: BehaviorSubject<Array<EnterpriseState>> = new BehaviorSubject<Array<EnterpriseState>>(
-    DB,
-  );
+  private db: BehaviorSubject<Array<EnterpriseState>> = new BehaviorSubject<
+    Array<EnterpriseState>
+  >(DB);
 
   public loadEnterprises(): Observable<Array<EnterpriseState>> {
     return this.db.asObservable();
   }
 
   public createMainEnterprise(
-    newMainEnterprise: IMainEnterprise,
+    newMainEnterprise: IMainEnterprise
   ): Observable<Array<EnterpriseState>> {
     const newState = [...this.db.getValue()];
     const enterprise = { ...newMainEnterprise };
     enterprise._id = Math.floor(Math.random() * 3020).toString();
-    this.db.next([...newState, { mainEnterprise: enterprise, subEnterprises: [] }]);
+    this.db.next([
+      ...newState,
+      { mainEnterprise: enterprise, subEnterprises: [] },
+    ]);
     return this.db.asObservable();
   }
 
   public updateMainEnterprise(
-    updatedMainEnterprise: IMainEnterprise,
+    updatedMainEnterprise: IMainEnterprise
   ): Observable<Array<EnterpriseState>> {
     const state = [...this.db.getValue()];
     const newState = state.map((element) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      if (element.mainEnterprise._id !== updatedMainEnterprise._id) return element;
+      if (element.mainEnterprise._id !== updatedMainEnterprise._id)
+        return element;
       return { ...element, mainEnterprise: updatedMainEnterprise };
     });
     this.db.next(newState);
@@ -92,31 +95,30 @@ export class EnterpriseService {
 
   public createSubEnterprise(
     newSubEnterprise: ISubEnterprise,
-    mainEnterpriseId: string,
+    mainEnterpriseId: string
   ): Observable<Array<EnterpriseState>> {
     const state = [...this.db.getValue()];
     const enterprise = { ...newSubEnterprise };
-    console.log(enterprise);
     enterprise._id = Math.floor(Math.random() * 3020).toString();
-    const newState = state.map((e) => {
-      if (e.mainEnterprise._id !== mainEnterpriseId) return e;
-      return { ...e, subEnterprises: [...e.subEnterprises, enterprise] };
+    const newState = state.map((element) => {
+      if (element.mainEnterprise._id !== mainEnterpriseId) return element;
+      return { ...element, subEnterprises: [...element.subEnterprises, enterprise] };
     });
-    console.log(newState);
     this.db.next(newState);
     return this.db.asObservable();
   }
 
   public updateSubEnterprise(
-    updatedSubEnterprise: ISubEnterprise,
+    updatedSubEnterprise: ISubEnterprise
   ): Observable<Array<EnterpriseState>> {
     const state = [...this.db.getValue()];
-    const newState = state.map((e) => {
-      const arr = e.subEnterprises.filter((v) => v._id !== updatedSubEnterprise._id);
+    const newState = state.map((element) => {
+      const arr = element.subEnterprises.filter(
+        (subEnterprise) => subEnterprise._id !== updatedSubEnterprise._id
+      );
       arr.push(updatedSubEnterprise);
-      return { ...e, subEnterprises: arr };
+      return { ...element, subEnterprises: arr };
     });
-    console.log(newState);
     this.db.next(newState);
     return this.db.asObservable();
   }
