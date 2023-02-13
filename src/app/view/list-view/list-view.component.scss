@@ -3,6 +3,7 @@
   flex-flow: column nowrap;
   row-gap: 15px;
   margin: 15px 0;
+  
   .list-line_column,
   .list-line_icon {
     display: flex;
@@ -12,10 +13,12 @@
     align-items: baseline;
   }
 }
-.add-item {
+
+.action {
   margin: 15px 0;
 }
-.sub-lines {
+
+.list-sub-lines_container {
   margin-left: 25px;
   margin-top: 15px;
   margin-bottom: 15px;

@@ -35,7 +35,6 @@ export class AuthService {
     return this.UserDB.pipe(
       map((users) => {
         const user: IUser[] = users.filter((el) => el.email === email);
-        console.log(user);
         if (user[0]) {
           return user[0];
         } else {
@@ -47,7 +46,7 @@ export class AuthService {
 
   private validatePassword(passwordInDb: string, inputPassword: string): boolean {
     console.log(passwordInDb, inputPassword);
-    const isValid: boolean = passwordInDb == inputPassword ? true : false;
+    const isValid: boolean = passwordInDb === inputPassword ? true : false;
     return isValid;
   }
 }

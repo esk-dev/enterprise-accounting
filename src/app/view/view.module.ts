@@ -9,9 +9,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTreeModule } from '@angular/material/tree';
+
 @NgModule({
   declarations: [TreeViewComponent, ListViewComponent, MainComponent],
   imports: [
@@ -26,10 +25,8 @@ import { MatTreeModule } from '@angular/material/tree';
     MatChipsModule,
     MatDividerModule,
     MatIconModule,
-    MatListModule,
-    MatButtonModule,
-    MatTreeModule,
     MatCardModule,
+    MatButtonModule,
   ],
 })
 export class ViewModule {}

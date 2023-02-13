@@ -1,14 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-// import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IMainEnterprise } from 'src/app/models/main-enterprise';
 import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import { CreateMainEnterpiseAction } from 'src/app/store/actions/enterprise.action';
-// import { IMainEnterprise } from 'src/app/models/main-enterprise';
-// import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import { FormDataService } from 'src/app/_services/form-data.service';
-// import { CreateMainEnterpiseAction } from 'src/app/store/actions/enterprise.action';
 
 @Component({
   selector: 'app-main-enterprise',

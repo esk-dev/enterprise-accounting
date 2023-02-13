@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GetEnterpisesAction } from 'src/app/store/actions/enterprise.action';
 import { selectAllEnterprises } from 'src/app/store/selectors/enterprise.selector';
 import { EnterpriseState } from 'src/app/store/state/app.state';
@@ -26,8 +26,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(GetEnterpisesAction());
-    this.enterprises$ = this.store
-      .select(selectAllEnterprises)
-      .pipe(tap((data) => console.log(data)));
+    this.enterprises$ = this.store.select(selectAllEnterprises);
   }
 }
