@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IMainEnterprise } from '../models/main-enterprise';
-// import { IMainEnterprise } from '../models/main-enterprise';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ISubEnterprise } from '../models/sub-enterprise';
 import { EnterpriseState } from '../store/state/app.state';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DB: Array<EnterpriseState> = [
   {
     mainEnterprise: {

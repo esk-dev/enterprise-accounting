@@ -2,8 +2,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IMainEnterprise } from 'src/app/models/main-enterprise';
 import { ISubEnterprise } from 'src/app/models/sub-enterprise';
 import { EnterpriseState } from './../state/app.state';
-// import { IMainEnterprise } from './../../models/main-enterprise';
-// import { ISubEnterprise } from './../../models/sub-enterprise';
 
 export const selectEnterprises = createFeatureSelector<Array<EnterpriseState>>('enterprises');
 
@@ -24,21 +22,6 @@ export const selectSubEnterprises = createSelector(
     state.map((element: EnterpriseState) => element.subEnterprises).flatMap((v) => v),
 );
 
-// export const selectEnterpriseById = (id: string | number) =>
-//   createSelector(selectAllEnterprises, (enterprises: Array<EnterpriseState>) => {
-//     const selectedEnterprise: Array<IMainEnterprise | ISubEnterprise> = [];
-
-//     enterprises.forEach((arr) => {
-//       arr.forEach((el: any) => {
-//         if (el._id === id) {
-//           selectedEnterprise.push(el);
-//         }
-//       });
-//     });
-//     return selectedEnterprise.length !== 0 ? selectedEnterprise[0] : null;
-//   });
-
-// Unused
 export const selectMainEnterprisesById = (mainEnterpriseId: string) =>
   createSelector(selectMainEnterprises, (mainEnterprises: IMainEnterprise[]) => {
     const mainEnterpriseById = mainEnterprises.filter((el) => el._id === mainEnterpriseId);
